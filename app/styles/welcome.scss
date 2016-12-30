@@ -1,0 +1,15 @@
+#welcome-link {
+  display: inline-block;
+
+  #welcome-link-text {
+    word-break: break-all;
+  }
+}
+
+#welcome-controls {
+  display: inline-block;
+
+  .welcome-button {
+    margin-left: 10px;
+  }
+}
