@@ -108,4 +108,6 @@ if __name__ == '__main__':
     ], debug=args.debug)
 
     app.listen(args.port)
+    print('Listening on :{}'.format(args.port))
+
     ioloop.IOLoop.instance().start()

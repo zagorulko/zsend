@@ -2,7 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ENV = process.env.NODE_ENV || 'production';
@@ -24,7 +23,7 @@ var commonConfig = {
       'msgpack-js',
       'strftime-component'
     ],
-    'main': path.resolve('app/main.js')
+    'main': path.resolve('client/main.js')
   },
 
   output: {
@@ -37,11 +36,11 @@ var commonConfig = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: path.resolve('app'),
+        include: path.resolve('client'),
         loader: 'babel-loader',
         query: {
           plugins: [
-              [ 'babel-root-import', { 'rootPathSuffix': 'app' } ],
+              [ 'babel-root-import', { 'rootPathSuffix': 'client' } ],
               'transform-runtime'
           ],
           presets: [
@@ -56,13 +55,11 @@ var commonConfig = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: [
-            { loader: 'css-loader', options: { modules: true } },
-            { loader: 'sass-loader'}
-          ]
-        })
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'sass-loader', options: { sourceMap: true } }
+        ]
       }
     ]
   },
@@ -84,15 +81,14 @@ var commonConfig = {
       'process.env.NODE_ENV': JSON.stringify(ENV)
     }),
     new HtmlWebpackPlugin({
-      template: 'app/index.html',
-      // favicon: 'app/favicon.ico'
-    }),
-    new ExtractTextPlugin('bundle.css')
+      template: 'client/index.html',
+      // favicon: 'client/favicon.ico'
+    })
   ]
 };
 
 var devConfig = {
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
 
   module: {
     rules: [
