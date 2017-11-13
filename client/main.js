@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger';
 import '~/styles/main.scss';
 
 import Root from '~/components/Root';
-import Dunno from '~/components/Dunno';
+import Error from '~/components/Error';
 import reducers from '~/reducers';
 import sessionMiddleware from '~/session';
 import { Stages } from '~/constants';
@@ -20,14 +20,14 @@ if (process.env.NODE_ENV === 'production' && window.location.protocol != "https:
 function browserIsOk() {
   if (!window.WebSocket) {
     ReactDOM.render(
-      <Dunno title='Your browser does not support WebSockets' />,
+      <Error title='Your browser does not support WebSockets' />,
       document.getElementById('app')
     );
     return false;
   }
   if (!window.crypto) {
     ReactDOM.render(
-      <Dunno title='Your browser does not support WebCrypto API' />,
+      <Error title='Your browser does not support WebCrypto API' />,
       document.getElementById('app')
     );
     return false;
@@ -44,8 +44,7 @@ if (browserIsOk()) {
       failReason: ''
     },
     dialog: {
-      show: false,
-      peerIsTyping: false
+      show: false
     },
     messages: {}
   };

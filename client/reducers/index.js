@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ActionTypes, MessageSources } from '~/constants';
+import { ActionTypes } from '~/constants';
 
 function session(state={}, action) {
   switch (action.type) {
@@ -24,38 +24,28 @@ function session(state={}, action) {
   }
 }
 
-function dialog(state={},action) {
+function dialog(state={}, action) {
   switch (action.type) {
   case ActionTypes.SHOW_DIALOG:
     return Object.assign({}, state, {
       show: true
-    });
-  case ActionTypes.PEER_IS_TYPING:
-    return Object.assign({}, state, {
-      peerIsTyping: action.isTyping
     });
   default:
     return state;
   }
 }
 
-function message(state={},action) {
+function message(state={}, action) {
   switch (action.type) {
-  case ActionTypes.ADD_CONNECTION_MESSAGE:
-    return {
-      source: MessageSources.CONNECTION,
-      time: action.time,
-      isConnected: action.isConnected
-    };
   case ActionTypes.INCOMING_TEXT:
     return {
-      source: MessageSources.INCOMING,
+      isIncoming: true,
       time: action.time,
       text: action.text
     };
   case ActionTypes.INCOMING_FILE:
     return {
-      source: MessageSources.INCOMING,
+      isIncoming: true,
       time: action.time,
       done: false,
       name: action.name,
@@ -65,13 +55,13 @@ function message(state={},action) {
     };
   case ActionTypes.SEND_TEXT:
     return {
-      source: MessageSources.OUTGOING,
+      isIncoming: false,
       time: action.time,
       text: action.text
     };
   case ActionTypes.SEND_FILE:
     return {
-      source: MessageSources.OUTGOING,
+      isIncoming: false,
       time: action.time,
       done: false,
       name: action.name,

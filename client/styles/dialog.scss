@@ -1,3 +1,15 @@
+#dialog-controls {
+  margin: 30px 0;
+
+  .btn-floating {
+    margin: 0 20px;
+  }
+}
+
+#dialog-welcome {
+  user-select: none;
+}
+
 #message-list {
   overflow-y: auto;
 }
@@ -7,55 +19,24 @@
     margin-bottom: 10px;
   }
 
+  .message-label {
+    margin-bottom: 10px;
+
+    .btn-floating {
+      margin-left: 10px;
+    }
+  }
+
   .message-text {
     word-break: break-all;
     white-space: pre-line;
   }
 
-  .message-file {
-    .message-file-label {
-      margin-bottom: 10px;
+  img {
+    max-width: 100%;
+
+    &:hover {
+      cursor: pointer;
     }
-
-    .btn-floating {
-      margin-left: 10px;
-
-      i {
-        color: rgba(0, 0, 0, 0.54);
-      }
-    }
-
-    img {
-      max-width: 100%;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-#dialog-footer {
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  #message-field {
-    padding-top: 0
-  }
-
-  #footer-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .left-button {
-    display: inline-block;
-    margin: 0 10px 0 0;
-    padding: 0;
-  }
-
-  #peer-status {
-    font-style: italic;
   }
 }

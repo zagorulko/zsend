@@ -82,7 +82,7 @@ var commonConfig = {
     }),
     new HtmlWebpackPlugin({
       template: 'client/index.html',
-      // favicon: 'client/favicon.ico'
+      hash: true
     })
   ]
 };

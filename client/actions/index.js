@@ -16,22 +16,8 @@ export function setInviteLink(url) {
 export function showDialog() {
   return { type: ActionTypes.SHOW_DIALOG };
 }
-export function typingMessage() {
-  return { type: ActionTypes.TYPING_MESSAGE };
-}
-export function peerIsTyping(isTyping) {
-  return { type: ActionTypes.PEER_IS_TYPING, isTyping: isTyping };
-}
 
 let nextMessageId = 0;
-export function addConnectionMessage(isConnected) {
-  return {
-    type: ActionTypes.ADD_CONNECTION_MESSAGE,
-    id: nextMessageId++,
-    time: new Date(),
-    isConnected: isConnected
-  };
-}
 export function incomingText(text) {
   return {
     type: ActionTypes.INCOMING_TEXT,

@@ -90,7 +90,6 @@ export default function ({getState, dispatch}) {
 
   let _keepConnection = 0;
   let _lastType = 0;
-  let _clearPeerTyping = 0;
 
   let ws = newConnection();
 
@@ -193,7 +192,6 @@ export default function ({getState, dispatch}) {
         dispatch(actions.setFailType(''));
         dispatch(actions.setFailReason(''));
         dispatch(actions.setStage(Stages.CONNECTED));
-        dispatch(actions.addConnectionMessage(true));
         dispatch(actions.showDialog());
       })
       .catch(err => {
@@ -208,18 +206,8 @@ export default function ({getState, dispatch}) {
       Crypto.aesDecrypt(_sessionKey, encrypted)
         .then(packet => {
           switch (packet.type) {
-          case 'typing':
-            if (_clearPeerTyping)
-              clearTimeout(_clearPeerTyping);
-            _clearPeerTyping = setTimeout(() => {
-              dispatch(actions.peerIsTyping(false));
-            }, 2000);
-            dispatch(actions.peerIsTyping(true));
-            break;
-
           case 'text':
             dispatch(actions.incomingText(decodeURIComponent(packet.text)));
-            dispatch(actions.peerIsTyping(false));
             break;
 
           case 'file':
@@ -243,23 +231,9 @@ export default function ({getState, dispatch}) {
     dispatch(actions.setStage(session.stage == Stages.CONNECTED
                               ? Stages.DISCONNECTED
                               : Stages.FAILED));
-    dispatch(actions.addConnectionMessage(false));
   };
 
   return next => action => {
-    if (action.type == ActionTypes.TYPING_MESSAGE) {
-      let time = new Date().getTime();
-      if (time - _lastType >= 4000) {
-        Crypto.aesEncrypt(_sessionKey, {
-          type: 'typing'
-        })
-        .then(encrypted => {
-          ws.send(msgpack.encode(encrypted));
-        });
-      }
-      _lastType = time;
-    }
-
     if (action.type == ActionTypes.SEND_TEXT) {
       Crypto.aesEncrypt(_sessionKey, {
         type: 'text',
