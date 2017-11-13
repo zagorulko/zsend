@@ -12,10 +12,7 @@ var commonConfig = {
       'babel-polyfill',
       'react',
       'react-dom',
-      'react-emoji',
-      'react-linkify',
       'react-redux',
-      'react-responsive',
       'redux',
       'base64-js',
       'filesize',
@@ -44,7 +41,7 @@ var commonConfig = {
               'transform-runtime'
           ],
           presets: [
-            [ 'es2015', { 'modules': false } ],
+            [ 'env', { 'modules': false } ],
             'react'
           ]
         }
